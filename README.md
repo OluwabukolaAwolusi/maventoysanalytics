@@ -27,15 +27,18 @@ Top 10 by profit, profit by weekday, day/location performance.
 **3. Product & Day:** Colorbuds $835K (21% total), #1 for 475/638 days. Best day Friday $770K (20%). 2022: $7.48M revenue at 29.27% margin vs 2023: $6.96M at 26.20% - 3% margin drop despite lower revenue. PlayDoh Can top 2 by units but outside top 10 by profit = low margin.
 
 **4. Inventory Risk**
-*Power BI Overview:* Overstock $60.70K, inventory value $410.24K, 17.4 days left.
-*MySQL Deep-Dive (Granular SKU analysis to validate dashboard):*
-![MySQL Overstock](https://github.com/user-attachments/assets/71a3c6fd-c258-4f38-9739-961ddd3687b0)
+*Power BI Overview:* Overstock $60.70K, inventory value $410.24K, 17.4 days left. (This is what the Power BI dashboard shows).
 
-Largest single SKU is 139 units (Dinosaur Figures - Airport). No concentrated overstock.
-- **Slowest:** Airport Dinosaur Figures - 139 on hand vs 169 sold (21 months). Ratio 0.82, $2,083 locked.
-- **Fastest:** Downtown Glass Marbles - 5,120 sold vs 110 remaining. Ratio 0.02, reorder required.
-- **Health:** Overstock distributed across 110-139 unit range = well-controlled.
-- **Risk:** Stockout, not overstock. Action Figure 6.5 days, Colorbuds 4.6 days critical.
+*MySQL Deep-Dive (Granular analysis to validate dashboard):*
+This detailed breakdown was done in MySQL Workbench to check overstock at product and store level.
+
+The largest single product in any one store is 139 units (Dinosaur Figures - Airport). There is no concentrated overstock in one product.
+[MySQL Overstock Fix](https://github.com/user-attachments/assets/71a3c6fd-c258-4f38-9739-961ddd3687b0)
+
+- **Slowest-moving:** Airport Dinosaur Figures - 139 units on hand in Airport vs 169 units sold over 21 months. Ratio 0.82, value locked $2,083.
+- **Fastest-moving:** Downtown Glass Marbles - 5,120 units sold vs 110 units remaining in Downtown. Ratio 0.02, reorder required.
+- **Health:** Overstock is distributed across many products holding 110-139 units each in different stores. This shows inventory is well-controlled.
+- **Risk:** The main risk is stockout, not overstock. Action Figure has 6.5 days and Colorbuds has 4.6 days of stock left across all locations.
 
 ## Data Model
 - `toy_products` (35 products, 5 categories)
@@ -60,18 +63,19 @@ UPDATE toy_products SET Product_Price = REPLACE(Product_Price, '$', '');
 ALTER TABLE toy_products MODIFY Product_Price DECIMAL(10,2);
 CREATE INDEX idx_sales_store_date ON toy_sales(Store_ID, Date);
 
-How to Run
-MySQL: Import small CSVs via Wizard. For sales_new.csv, place in C:/ProgramData/MySQL/MySQL Server 9.0/Uploads/ and run LOAD DATA INFILE script from maven_toys_project.sql
+## How to Run
+MySQL: Import small CSVs via Wizard. For sales_new.csv, place in `C:/ProgramData/MySQL/MySQL Server 9.0/Uploads/` and run LOAD DATA INFILE.
 
-Power BI: Open Maven_Toys.pbix > Refresh
+Power BI: Open `Maven_Toys.pbix` > Refresh
 
-**Live Dashboard:** [View Interactive Dashboard on Power BI](https://app.powerbi.com/links/d03eQr4TnX?ctid=5fe78ac1-1afe-4009-aa04-a71efb4a5042&pbi_source=linkShare) - requires Microsoft sign-in
+**Live Dashboard:** [View Interactive Dashboard on Power BI](https://app.powerbi.com/links/d03eQr4TnX?ctid=5fe78ac1-1afe-4009-aa04-a71efb4a5042&pbi_source=linkShare)
 
-Files
-maven_toys_project.sql - 16 queries + optimized overstock fix
-Maven_Toys.pbix
-/images - screenshots
-Data: https://www.kaggle.com/datasets/mysarahmadbhat/toy-sales
+## Files
+- `maven_toys_project.sql` - 16 queries + optimized overstock fix
+- `Maven_Toys.pbix`
+- `/images` - screenshots
 
-Author
+Data: [Kaggle - Toy Sales](https://www.kaggle.com/datasets/mysarahmadbhat/toy-sales)
+
+## Author
 Oluwabukola Awolusi - Data Analyst | [LinkedIn - Oluwabukola Awolusi](https://www.linkedin.com/in/oluwabukola-awolusi-926072364)
