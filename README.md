@@ -9,9 +9,11 @@ Identify why margin dropped from 29.27% to 26.20% and where inventory risk is co
 ## Dashboard Preview
 ### 1. Business At A Glance
 ![Business](https://github.com/user-attachments/assets/7a2830b2-44cb-44c1-8d89-75ccdff13cf7)
+
 KPI cards, profit by category, avg profit per store by location, monthly trend with seasonality (Peak: Dec 2022 $0.88M).
 
 ### 2. Inventory Risk
+
 ![Inventory](https://github.com/user-attachments/assets/43cdcae4-af60-41da-9d7a-fcc7d65cb556)
 Overstock value by location, stock health, critical reorder table.
 
@@ -27,7 +29,7 @@ Top 10 by profit, profit by weekday, day/location performance.
 **3. Product & Day:** Colorbuds $835K (21% total), #1 for 475/638 days. Best day Friday $770K (20%). 2022: $7.48M revenue at 29.27% margin vs 2023: $6.96M at 26.20% - 3% margin drop despite lower revenue. PlayDoh Can top 2 by units but outside top 10 by profit = low margin.
 
 **4. Inventory Risk**
-*Power BI Overview:* Overstock $60.70K, inventory value $410.24K, 17.4 days left. (This is what the Power BI dashboard shows).
+*Power BI Overview:* Overstock $60.70K, inventory value $410.24K, 17.4 days left.
 
 *MySQL Deep-Dive (Granular analysis to validate dashboard):*
 This detailed breakdown was done in MySQL Workbench to check overstock at product and store level.
@@ -62,6 +64,7 @@ Data quality: Product_Price/Cost were VARCHAR with $. Fixed in MySQL:
 UPDATE toy_products SET Product_Price = REPLACE(Product_Price, '$', '');
 ALTER TABLE toy_products MODIFY Product_Price DECIMAL(10,2);
 CREATE INDEX idx_sales_store_date ON toy_sales(Store_ID, Date);
+```
 
 ## How to Run
 MySQL: Import small CSVs via Wizard. For sales_new.csv, place in `C:/ProgramData/MySQL/MySQL Server 9.0/Uploads/` and run LOAD DATA INFILE.
