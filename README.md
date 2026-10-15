@@ -1,7 +1,7 @@
 # Maven Toys - Sales & Inventory Performance Analysis
 **Revenue: $14.44M | Profit: $4.01M | 800K Transactions | 1.09M Units Sold | 50 Stores | 21 Months**
 
-This project analyzes 1.09M sales transactions to identify profit drivers, store performance, and inventory risk using MySQL 9.0 and Power BI.
+This project analyzes 800K sales transactions to identify profit drivers, store performance, and inventory risk using MySQL 9.0 and Power BI.
 
 ### Business Problem
 Identify why margin dropped from 29.27% to 26.20% and where inventory risk is concentrated.
