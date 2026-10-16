@@ -4,7 +4,6 @@
 This project analyzes 800K sales transactions to identify profit drivers, store performance, and inventory risk using MySQL 9.0 and Power BI.
 
 ## Business Problem
-
 Maven Toys has 50+ stores across Mexico but profit margin dropped from 29.27% to 26.20%.
 
 I looked into the sales and inventory data to figure out what's really happening:
